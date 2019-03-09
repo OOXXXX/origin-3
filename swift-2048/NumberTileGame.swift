@@ -24,7 +24,7 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
   var scoreView: ScoreViewProtocol?
 
   // Width of the gameboard
-  let boardWidth: CGFloat = 230.0
+  let boardWidth: CGFloat = 333.0
   // How much padding to place between the tiles
   let thinPadding: CGFloat = 3.0
   let thickPadding: CGFloat = 6.0
@@ -40,7 +40,9 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     threshold = t > 8 ? t : 8
     super.init(nibName: nil, bundle: nil)
     model = GameModel(dimension: dimension, threshold: threshold, delegate: self)
-    view.backgroundColor = UIColor.white
+    let image = UIImage(named: "colour")
+    let patternColor = UIColor.init(patternImage:image!)
+    self.view.backgroundColor = patternColor
     setupSwipeControls()
   }
 
@@ -116,8 +118,7 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     // Create the score view
     let scoreView = ScoreView(backgroundColor: UIColor.black,
       textColor: UIColor.white,
-      font: UIFont(name: "HelveticaNeue-Bold", size: 16.0) ?? UIFont.systemFont(ofSize: 16.0),
-      radius: 6)
+      font: UIFont(name: "HelveticaNeue-Bold", size: 20.0) ??  UIFont.systemFont(ofSize: 30.0),radius: 8)
     scoreView.score = 0
 
     // Create the gameboard
@@ -125,11 +126,11 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     let v1 = boardWidth - padding*(CGFloat(dimension + 1))
     let width: CGFloat = CGFloat(floorf(CFloat(v1)))/CGFloat(dimension)
     let gameboard = GameboardView(dimension: dimension,
-      tileWidth: width,
-      tilePadding: padding,
-      cornerRadius: 6,
-      backgroundColor: UIColor.black,
-      foregroundColor: UIColor.darkGray)
+        tileWidth: width,
+        tilePadding: padding,
+        cornerRadius: 6,
+        backgroundColor: UIColor.black,
+        foregroundColor: UIColor.darkGray)
 
     // Set up the frames
     let views = [scoreView, gameboard]
@@ -182,10 +183,10 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
       // TODO: alert delegate we lost
       NSLog("You lost...")
       let alertView = UIAlertView()
-      alertView.title = "Defeat"
-      alertView.message = "You lost..."
+      alertView.title = "You lose~"
       alertView.addButton(withTitle: "Cancel")
       alertView.show()
+        return
     }
   }
 
