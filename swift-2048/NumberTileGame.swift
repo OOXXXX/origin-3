@@ -35,7 +35,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
   // Amount that the vertical alignment of the component views should differ from if they were centered
   let verticalViewOffset: CGFloat = 0.0
 
-  init(dimension d: Int, threshold t: Int) {
+    @available(iOS 10.0, *)
+    init(dimension d: Int, threshold t: Int) {
     dimension = d > 2 ? d : 2
     threshold = t > 8 ? t : 8
     super.init(nibName: nil, bundle: nil)
@@ -50,25 +51,43 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     fatalError("NSCoding not supported")
   }
 
-  func setupSwipeControls() {
+    @available(iOS 10.0, *)
+    func setupSwipeControls() {
     let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.upCommand(_:)))
     upSwipe.numberOfTouchesRequired = 1
     upSwipe.direction = UISwipeGestureRecognizerDirection.up
+    let generator = UIImpactFeedbackGenerator(style: .heavy)
+    generator.impactOccurred()
     view.addGestureRecognizer(upSwipe)
 
     let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.downCommand(_:)))
     downSwipe.numberOfTouchesRequired = 1
     downSwipe.direction = UISwipeGestureRecognizerDirection.down
+    if #available(iOS 10.0, *) {
+        _ = UIImpactFeedbackGenerator(style: .light)
+    } else {
+        // Fallback on earlier versions
+    }
     view.addGestureRecognizer(downSwipe)
 
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.leftCommand(_:)))
     leftSwipe.numberOfTouchesRequired = 1
     leftSwipe.direction = UISwipeGestureRecognizerDirection.left
+    if #available(iOS 10.0, *) {
+        _ = UIImpactFeedbackGenerator(style: .light)
+    } else {
+        // Fallback on earlier versions
+    }
     view.addGestureRecognizer(leftSwipe)
 
     let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.rightCommand(_:)))
     rightSwipe.numberOfTouchesRequired = 1
     rightSwipe.direction = UISwipeGestureRecognizerDirection.right
+    if #available(iOS 10.0, *) {
+        _ = UIImpactFeedbackGenerator(style: .light)
+    } else {
+        // Fallback on earlier versions
+    }
     view.addGestureRecognizer(rightSwipe)
   }
 
