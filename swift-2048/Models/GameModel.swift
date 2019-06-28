@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 /// A protocol that establishes a way for the game model to communicate with its parent view controller.
 protocol GameModelProtocol : class {
   func scoreChanged(to score: Int)

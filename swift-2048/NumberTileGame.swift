@@ -51,43 +51,31 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
     fatalError("NSCoding not supported")
   }
 
+    
     @available(iOS 10.0, *)
     func setupSwipeControls() {
     let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.upCommand(_:)))
     upSwipe.numberOfTouchesRequired = 1
     upSwipe.direction = UISwipeGestureRecognizerDirection.up
-    let generator = UIImpactFeedbackGenerator(style: .heavy)
-    generator.impactOccurred()
+   
     view.addGestureRecognizer(upSwipe)
 
     let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.downCommand(_:)))
     downSwipe.numberOfTouchesRequired = 1
     downSwipe.direction = UISwipeGestureRecognizerDirection.down
-    if #available(iOS 10.0, *) {
-        _ = UIImpactFeedbackGenerator(style: .light)
-    } else {
-        // Fallback on earlier versions
-    }
+     
     view.addGestureRecognizer(downSwipe)
 
     let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.leftCommand(_:)))
     leftSwipe.numberOfTouchesRequired = 1
     leftSwipe.direction = UISwipeGestureRecognizerDirection.left
-    if #available(iOS 10.0, *) {
-        _ = UIImpactFeedbackGenerator(style: .light)
-    } else {
-        // Fallback on earlier versions
-    }
+     
     view.addGestureRecognizer(leftSwipe)
 
     let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(NumberTileGameViewController.rightCommand(_:)))
     rightSwipe.numberOfTouchesRequired = 1
     rightSwipe.direction = UISwipeGestureRecognizerDirection.right
-    if #available(iOS 10.0, *) {
-        _ = UIImpactFeedbackGenerator(style: .light)
-    } else {
-        // Fallback on earlier versions
-    }
+    
     view.addGestureRecognizer(rightSwipe)
   }
 
@@ -178,7 +166,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
   }
 
   // Misc
-  func followUp() {
+    @available(iOS 10.0, *)
+    func followUp() {
     assert(model != nil)
     let m = model!
     let (userWon, _) = m.userHasWon()
@@ -189,6 +178,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
       alertView.message = "You won!"
       alertView.addButton(withTitle: "Cancel")
       alertView.show()
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
       // TODO: At this point we should stall the game until the user taps 'New Game' (which hasn't been implemented yet)
       return
     }
@@ -205,12 +196,15 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
       alertView.title = "You lose~"
       alertView.addButton(withTitle: "Cancel")
       alertView.show()
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
         return
     }
   }
 
   // Commands
-  @objc(up:)
+    @available(iOS 10.0, *)
+    @objc(up:)
   func upCommand(_ r: UIGestureRecognizer!) {
     assert(model != nil)
     let m = model!
@@ -222,7 +216,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
       })
   }
 
-  @objc(down:)
+    @available(iOS 10.0, *)
+    @objc(down:)
   func downCommand(_ r: UIGestureRecognizer!) {
     assert(model != nil)
     let m = model!
@@ -234,7 +229,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
       })
   }
 
-  @objc(left:)
+    @available(iOS 10.0, *)
+    @objc(left:)
   func leftCommand(_ r: UIGestureRecognizer!) {
     assert(model != nil)
     let m = model!
@@ -246,7 +242,8 @@ class NumberTileGameViewController : UIViewController, GameModelProtocol {
       })
   }
 
-  @objc(right:)
+    @available(iOS 10.0, *)
+    @objc(right:)
   func rightCommand(_ r: UIGestureRecognizer!) {
     assert(model != nil)
     let m = model!
